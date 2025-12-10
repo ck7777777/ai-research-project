@@ -493,7 +493,7 @@ const DemoView = () => {
                  
                  <div className="relative z-10 text-center w-full max-w-6xl mx-auto px-4 sm:px-6 -mt-16">
                       <img 
-                        src={`${import.meta.env.BASE_URL}use-cases-demo-title.png`}
+                        src={`${import.meta.env.BASE_URL}use-cases-demo-title.png?v=2`}
                         alt="USE CASES DEMO"
                         className="w-full max-w-[112%] sm:max-w-[106%] md:max-w-[100%] lg:max-w-[94%] xl:max-w-[88%] h-auto mx-auto"
                         style={{ filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))' }}
