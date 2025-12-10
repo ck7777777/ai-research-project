@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini 3 Pro Release Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: 'JUST Sans';
+        src: url('https://fonts.cdnfonts.com/s/95498/JUSTSansRegular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'JUST Sans';
+        src: url('https://fonts.cdnfonts.com/s/95498/JUSTSansBold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', 'serif'],
+              sans: ['"Inter"', 'sans-serif'],
+            },
+            colors: {
+              cream: '#FFFEF2',
+              charcoal: '#252525',
+              'charcoal-light': '#404040',
+            },
+            animation: {
+              blob: "blob 7s infinite",
+              flow: "flow 15s ease infinite",
+            },
+            keyframes: {
+              blob: {
+                "0%": {
+                  transform: "translate(0px, 0px) scale(1)",
+                },
+                "33%": {
+                  transform: "translate(30px, -50px) scale(1.1)",
+                },
+                "66%": {
+                  transform: "translate(-20px, 20px) scale(0.9)",
+                },
+                "100%": {
+                  transform: "translate(0px, 0px) scale(1)",
+                },
+              },
+              flow: {
+                "0%, 100%": {
+                  "background-size": "200% 200%",
+                  "background-position": "left center"
+                },
+                "50%": {
+                  "background-size": "200% 200%",
+                  "background-position": "right center"
+                }
+              }
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+      }
+      body {
+        background-color: #FFFEF2;
+        color: #252525;
+      }
+      .aurora-bg {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #FFFEF2, #23d5ab);
+        background-size: 400% 400%;
+        animation: flow 15s ease infinite;
+      }
+      /* Soft pastel fluid mesh */
+      .fluid-mesh {
+        background-color: #ffdee9;
+        background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+        background-size: 400% 400%;
+        animation: flow 10s ease-in-out infinite alternate;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 0px solid rgba(255, 255, 255, 0.18);
+      }
+      @media print {
+        nav, footer, button {
+          display: none !important;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.0",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
+    "three": "https://aistudiocdn.com/three@^0.181.1",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.553.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
