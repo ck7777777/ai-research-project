@@ -493,7 +493,7 @@ const DemoView = () => {
                  
 <div className="relative z-10 w-full -mt-16 overflow-visible">
                      <img 
-                        src={`${import.meta.env.BASE_URL}use-cases-demo-title.png?v=6`}
+                        src={`${import.meta.env.BASE_URL}use-cases-demo-title.png?v=7`}
                         alt="USE CASES DEMO"
                         className="w-[113%] md:w-[143%] max-w-none h-auto relative left-1/2"
                         style={{ 
