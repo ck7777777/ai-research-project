@@ -495,7 +495,7 @@ const DemoView = () => {
                       <img 
                         src={`${import.meta.env.BASE_URL}use-cases-demo-title.png?v=4`}
                         alt="USE CASES DEMO"
-                        className="w-[90%] sm:w-[95%] md:w-[140%] lg:w-[160%] xl:w-[180%] max-w-none h-auto mx-auto"
+                        className="w-[85%] h-auto mx-auto"
                         style={{ 
                           filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))'
                         }}
