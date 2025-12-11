@@ -266,7 +266,7 @@ const PortfolioHomeView = ({ onNavigate }: { onNavigate: (view: string) => void 
                     <Mail size={20} />
                   </a>
                   <a
-                    href="https://worlds.viverse.com/profile"
+                    href="https://create.viverse.com/yL9Jg6d"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="glass-button p-3 rounded-full"
