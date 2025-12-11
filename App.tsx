@@ -1,12 +1,302 @@
+/// <reference types="vite/client" />
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect } from 'react';
+// Vite import meta typing
+interface ImportMetaEnv {
+  readonly [key: string]: string;
+}
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+import React, { useState, useEffect, useRef } from 'react';
 import { ConvergenceScene, AgenticNetworkScene, FluidVideoBackground } from './components/QuantumScene';
 import { MultimodalityDiagram, ModelFusionDiagram, PerformanceMetricDiagram, GenerativeUiVisual } from './components/Diagrams';
-import { ArrowDown, Menu, X, Rocket, Sparkles, Brain, Code, Layers, AlertTriangle, ArrowRight, Check, Layout, Terminal, Play, Plane, Mail, CreditCard, Search, Calendar, Music, Video } from 'lucide-react';
+import { ArrowDown, Menu, X, Rocket, Sparkles, Brain, Code, Layers, AlertTriangle, ArrowRight, Check, Layout, Terminal, Play, Plane, Mail, CreditCard, Search, Calendar, Music, Video, ExternalLink, Github, Linkedin } from 'lucide-react';
+
+// --- LIQUID GLASS SVG FILTER ---
+const LiquidGlassFilter = () => (
+  <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+    <defs>
+      <filter id="glass" x="-50%" y="-50%" width="200%" height="200%" primitiveUnits="objectBoundingBox">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.02" result="blur" />
+        <feColorMatrix
+          in="blur"
+          type="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+          result="goo"
+        />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+);
+
+// --- PORTFOLIO HOME VIEW (Liquid Glass Homepage) ---
+const PortfolioHomeView = ({ onNavigate }: { onNavigate: (view: string) => void }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const researchProjects = [
+    {
+      id: 'gemini3',
+      title: 'Gemini 3 Pro',
+      subtitle: 'New Model Release',
+      description: 'A comprehensive study on Google\'s latest frontier AI model with advanced reasoning and multimodal capabilities.',
+      date: 'Nov 2025',
+      tags: ['AI', 'LLM', 'Multimodal', 'Research'],
+      image: `${import.meta.env.BASE_URL}gemini3Pro.jpg`,
+      color: 'from-purple-500/20 to-blue-500/20',
+    },
+    {
+      id: 'coming-soon-1',
+      title: 'Claude Opus 4.5',
+      subtitle: 'Coming Soon',
+      description: 'An in-depth analysis of Anthropic\'s next-generation AI assistant with enhanced safety features.',
+      date: 'Coming Soon',
+      tags: ['AI', 'Safety', 'Assistant'],
+      image: `${import.meta.env.BASE_URL}claudeOpus45.png`,
+      color: 'from-orange-500/20 to-red-500/20',
+    },
+    {
+      id: 'coming-soon-2',
+      title: 'GPT-5.1 Analysis',
+      subtitle: 'Coming Soon',
+      description: 'Exploring OpenAI\'s latest breakthrough in artificial general intelligence capabilities.',
+      date: 'Coming Soon',
+      tags: ['AI', 'AGI', 'OpenAI'],
+      image: `${import.meta.env.BASE_URL}gpt51.jpg`,
+      color: 'from-green-500/20 to-teal-500/20',
+    },
+  ];
+
+  // Ensure background video plays at 0.8x speed (20% slower)
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.8;
+    }
+  }, []);
+
+  return (
+    <div 
+      className="min-h-screen text-white" 
+      style={{ 
+        fontFamily: 'var(--font-sf-pro)',
+      }}
+    >
+      {/* Video Background */}
+      {/* To revert: change \"BG6.mov\" back to BG5/BG4/BG3/BG2/BGV below */}
+      <div className="video-background">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="w-full h-full object-cover"
+          ref={videoRef}
+        >
+          <source src={`${import.meta.env.BASE_URL}BG6.mov`} type="video/mp4" />
+          {/* Previous versions:
+              <source src={`${import.meta.env.BASE_URL}BG5.mov`} type="video/mp4" />
+              <source src={`${import.meta.env.BASE_URL}BG4.mov`} type="video/mp4" />
+              <source src={`${import.meta.env.BASE_URL}BG3.mov`} type="video/mp4" />
+              <source src={`${import.meta.env.BASE_URL}BG2.mov`} type="video/mp4" />
+              <source src={`${import.meta.env.BASE_URL}BGV.MOV`} type="video/mp4" />
+          */}
+        </video>
+        <div className="video-overlay"></div>
+      </div>
+      <LiquidGlassFilter />
+      
+      {/* Hero Section */}
+      <header className="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
+
+        <div className="relative z-10 text-center max-w-4xl mx-auto">
+          {/* Glass badge */}
+          <div className="inline-block mb-8">
+            <div className="glass-badge px-8 py-3 text-sm tracking-widest uppercase animate-glow">
+              AI Research & Portfolio
+            </div>
+          </div>
+          
+          {/* Main title */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 glass-text leading-tight">
+            Cheryl's AI
+            <br />
+            <span className="text-white/90">Research</span>
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
+            Exploring the frontiers of artificial intelligence through deep research, 
+            analysis, and hands-on experimentation with cutting-edge AI models.
+          </p>
+          
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              onClick={() => {
+                document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="glass-button px-8 py-4 text-base font-semibold flex items-center justify-center gap-2 group"
+            >
+              <span>View Research</span>
+              <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
+            </button>
+            <button 
+              onClick={() => {
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="glass-button glass-button-dark px-8 py-4 text-base font-semibold flex items-center justify-center"
+            >
+              <span>More</span>
+            </button>
+          </div>
+        </div>
+
+        </header>
+
+      {/* Research Projects Section */}
+      <section id="research" className="py-24 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Section header */}
+          <div className="text-center mb-16">
+            <div className="inline-block glass-badge px-6 py-2 text-xs tracking-widest uppercase mb-6">
+              Research & Project
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold glass-text mb-4">
+              AI Research Overview
+            </h2>
+            <p className="text-white/50 max-w-xl mx-auto">
+              Deep dive into the frontier technology advancement.
+            </p>
+          </div>
+
+          {/* Research cards grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {researchProjects.map((project) => (
+              <div 
+                key={project.id}
+                onClick={() => project.id === 'gemini3' ? onNavigate('gemini3') : null}
+                className={`glass-card p-6 cursor-pointer group ${project.id !== 'gemini3' ? 'opacity-60' : ''}`}
+              >
+                {/* Image */}
+                <div className={`relative h-48 rounded-xl overflow-hidden mb-6 bg-gradient-to-br ${project.color}`}>
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <span className="text-xs text-white/70 font-medium">{project.date}</span>
+                  </div>
+                  {project.id === 'gemini3' && (
+                    <div className="absolute top-4 right-4">
+                      <ExternalLink size={20} className="text-white/80 group-hover:text-white transition-colors" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="space-y-3">
+                  <div className="text-xs text-white/50 uppercase tracking-wider">{project.subtitle}</div>
+                  <h3 className="text-2xl font-bold text-white group-hover:text-white/90 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {project.tags.map((tag) => (
+                      <span 
+                        key={tag}
+                        className="glass-tag px-3 py-1 text-xs text-white/70"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 px-6 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass-card p-8 md:p-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+              {/* Avatar */}
+              <div className="flex justify-center">
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden">
+                  <img 
+                    src={`${import.meta.env.BASE_URL}look.jpeg`}
+                    alt="Cheryl Kuo"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              
+              {/* Info */}
+              <div className="md:col-span-2 text-center md:text-left">
+                <h3 className="text-3xl font-bold mb-2">Cheryl Kuo</h3>
+                <p className="text-white/50 mb-4">Product Manager & AI Practitioner</p>
+                <p className="text-white/70 leading-relaxed mb-6">
+                  Focused on building meaningful, user-centric products by applying frontier AI in practical, scalable ways. 
+                  Driven, curious, and committed to turning emerging technologies into real-world impact.
+                </p>
+                
+                {/* Social links */}
+                <div className="flex justify-center md:justify-start gap-4">
+                  <a href="#" className="glass-button p-3 rounded-full">
+                    <Linkedin size={20} />
+                  </a>
+                  <a href="#" className="glass-button p-3 rounded-full">
+                    <Github size={20} />
+                  </a>
+                  <a href="#" className="glass-button p-3 rounded-full">
+                    <Mail size={20} />
+                  </a>
+                  <a
+                    href="https://worlds.viverse.com/profile"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glass-button p-3 rounded-full"
+                  >
+                    <img
+                      src={`${import.meta.env.BASE_URL}viverse.png`}
+                      alt="Viverse"
+                      className="w-5 h-5"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-6 relative z-10 border-t border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">C</div>
+            <span className="font-semibold">Cheryl's AI Research</span>
+          </div>
+          <p className="text-white/40 text-sm">© 2025 All rights reserved</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
 // --- COMPONENTS ---
 
@@ -478,29 +768,35 @@ const DemoView = () => {
     const activeDemo = demos.find(d => d.id === activeDemoId) || demos[0];
 
     return (
-        <div className="pt-20 pb-24 min-h-screen animate-in fade-in duration-700">
+        <div className="pt-19 pb-24 min-h-screen animate-in fade-in duration-700">
              
              {/* HEADER BACKGROUND SECTION */}
-             <div className="relative w-full py-32 mb-12 flex items-center justify-center overflow-hidden">
+             <div className="relative w-full pb-12 mb-12 flex items-center justify-center overflow-hidden" style={{ minHeight: '190px' }}>
                  {/* Replaced fluid-mesh CSS with FluidVideoBackground Component */}
-                 <FluidVideoBackground />
+                 <div className="absolute inset-0 top-0 z-0" style={{ transform: 'translateY(calc(-15.625% - 2px))', clipPath: 'inset(20% 0 0 0)' }}>
+                   <FluidVideoBackground />
+                 </div>
                  
                  {/* Glass overlay */}
                  <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>
                  
-                 {/* Bottom fade to blend into background */}
-                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-cream via-cream/80 to-transparent"></div>
+                 {/* Bottom fade to blend into background (smoother, less visible line) */}
+                 <div
+                   className="absolute bottom-0 left-0 right-0 h-40 backdrop-blur-xl"
+                   style={{
+                     background:
+                       'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(254,254,241,0.25) 35%, rgba(254,254,241,0.55) 65%, rgba(254,254,241,0.9) 100%)'
+                   }}
+                 ></div>
                  
-<div className="relative z-10 w-full -mt-16 overflow-visible">
-                     <img 
-                        src={`${import.meta.env.BASE_URL}use-cases-demo-title.png?v=6`}
-                        alt="USE CASES DEMO"
-                        className="w-[100%] md:w-[107%] max-w-none h-auto relative left-1/2"
-                        style={{ 
-                          filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
-                          transform: 'translateX(-50%)'
-                        }}
-                      />
+                 {/* Liquid Glass Oval Box */}
+                 <div className="relative z-10 flex items-center justify-center w-full px-6" style={{ paddingTop: '130px', paddingBottom: '40px' }}>
+                   <div 
+                     className="glass-card px-10 md:px-16 py-4 rounded-full text-lg md:text-xl font-extrabold tracking-[0.08em] uppercase text-white text-center shadow-xl animate-glow"
+                     style={{ fontFamily: 'MILKER, var(--font-sf-pro)' }}
+                   >
+                     USE CASE DEMO
+                   </div>
                  </div>
              </div>
 
@@ -612,9 +908,9 @@ const DemoView = () => {
 
 const App: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'demo'>('home');
+  const [currentView, setCurrentView] = useState<'portfolio' | 'gemini3' | 'demo'>('portfolio');
 
-  const handleNavClick = (view: 'home' | 'demo', id?: string) => (e: React.MouseEvent) => {
+  const handleNavClick = (view: 'portfolio' | 'gemini3' | 'demo', id?: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     setMenuOpen(false);
     
@@ -631,25 +927,32 @@ const App: React.FC = () => {
 
     // If switching views
     setCurrentView(view);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // If switching to home with an ID, wait for render then scroll
-    if (view === 'home' && id) {
+    // If switching to gemini3 with an ID, wait for render then scroll
+    if (view === 'gemini3' && id) {
         setTimeout(() => {
             const element = document.getElementById(id);
             if (element) element.scrollIntoView({ behavior: 'smooth' });
         }, 100);
-    } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+  // Portfolio Home View (Liquid Glass)
+  if (currentView === 'portfolio') {
+    return (
+      <PortfolioHomeView onNavigate={(view) => setCurrentView(view as 'portfolio' | 'gemini3' | 'demo')} />
+    );
+  }
+
+  // Gemini 3 Research & Demo Views
   return (
     <div className="min-h-screen bg-cream text-charcoal selection:bg-charcoal selection:text-cream font-sans">
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-charcoal/10">
         <div className="container mx-auto px-6 h-20 flex justify-between items-center">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={handleNavClick('home')}>
+          <div className="flex items-center gap-3 cursor-pointer" onClick={handleNavClick('portfolio')}>
             <div className="w-8 h-8 bg-charcoal text-cream rounded-full flex items-center justify-center font-serif font-bold text-lg">C</div>
             <span className="font-serif font-bold text-xl tracking-wide">
               Cheryl's AI Research
@@ -657,18 +960,11 @@ const App: React.FC = () => {
           </div>
           
           <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.1em] uppercase text-charcoal/60">
-            <a href="#overview" onClick={handleNavClick('home', 'overview')} className={`hover:text-charcoal transition-colors ${currentView === 'home' ? 'text-charcoal' : ''}`}>Overview</a>
-            <a href="#features" onClick={handleNavClick('home', 'features')} className="hover:text-charcoal transition-colors">Key Features</a>
-            <a href="#review" onClick={handleNavClick('home', 'review')} className="hover:text-charcoal transition-colors">Review</a>
+            <a href="#" onClick={handleNavClick('portfolio')} className="hover:text-charcoal transition-colors">Home</a>
+            <a href="#overview" onClick={handleNavClick('gemini3', 'overview')} className={`hover:text-charcoal transition-colors ${currentView === 'gemini3' ? 'text-charcoal' : ''}`}>Overview</a>
+            <a href="#features" onClick={handleNavClick('gemini3', 'features')} className="hover:text-charcoal transition-colors">Key Features</a>
+            <a href="#review" onClick={handleNavClick('gemini3', 'review')} className="hover:text-charcoal transition-colors">Review</a>
             <a href="#" onClick={handleNavClick('demo')} className={`hover:text-[#B88786] transition-colors ${currentView === 'demo' ? 'text-[#B88786]' : ''}`}>Demo</a>
-            <a 
-              href="https://aistudio.google.com/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="px-6 py-2.5 bg-charcoal text-white hover:bg-blue-700 transition-colors duration-300"
-            >
-              Try on AI Studio
-            </a>
           </div>
 
           <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
@@ -680,16 +976,17 @@ const App: React.FC = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-cream flex flex-col items-center justify-center gap-8 text-2xl font-serif">
-            <a href="#overview" onClick={handleNavClick('home', 'overview')} className="hover:text-[#B88786]">Overview</a>
-            <a href="#features" onClick={handleNavClick('home', 'features')} className="hover:text-[#B88786]">Key Features</a>
-            <a href="#review" onClick={handleNavClick('home', 'review')} className="hover:text-[#B88786]">Review</a>
+            <a href="#" onClick={handleNavClick('portfolio')} className="hover:text-[#B88786]">Home</a>
+            <a href="#overview" onClick={handleNavClick('gemini3', 'overview')} className="hover:text-[#B88786]">Overview</a>
+            <a href="#features" onClick={handleNavClick('gemini3', 'features')} className="hover:text-[#B88786]">Key Features</a>
+            <a href="#review" onClick={handleNavClick('gemini3', 'review')} className="hover:text-[#B88786]">Review</a>
             <a href="#" onClick={handleNavClick('demo')} className="hover:text-[#B88786]">Demo</a>
         </div>
       )}
 
       {/* Main View Content */}
-      {currentView === 'home' ? (
-          <HomeView scrollToSection={(id) => handleNavClick('home', id)({ preventDefault: () => {} } as React.MouseEvent)} />
+      {currentView === 'gemini3' ? (
+          <HomeView scrollToSection={(id) => handleNavClick('gemini3', id)({ preventDefault: () => {} } as React.MouseEvent)} />
       ) : (
           <DemoView />
       )}
@@ -699,7 +996,7 @@ const App: React.FC = () => {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
                     <div>
-                        <div className="w-12 h-12 bg-cream text-charcoal rounded-full flex items-center justify-center font-serif font-bold text-2xl mb-6">C</div>
+                        <div className="w-12 h-12 bg-cream text-charcoal rounded-full flex items-center justify-center font-serif font-bold text-2xl mb-6 cursor-pointer" onClick={handleNavClick('portfolio')}>C</div>
                         <h3 className="font-serif text-3xl mb-4">Gemini 3 Pro Study</h3>
                         <p className="text-cream/50 max-w-sm mb-8 leading-relaxed">
                             A comprehensive look at the new standard in multimodal intelligence. Stay tuned for updates on benchmarks and hidden features.
@@ -712,7 +1009,7 @@ const App: React.FC = () => {
                     <div className="text-left md:text-right">
                          <div className="mb-2 text-xs font-bold tracking-[0.2em] text-cream/40 uppercase">Author</div>
                          <div className="font-serif text-2xl mb-1">Cheryl Kuo</div>
-                         <div className="text-cream/60 font-sans text-sm">VIVE Product</div>
+                         <div className="text-cream/60 font-sans text-sm">Product Manager & AI Practitioner</div>
                     </div>
                 </div>
             </div>

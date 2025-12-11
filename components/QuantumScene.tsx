@@ -13,9 +13,10 @@ import * as THREE from 'three';
 const FluidShaderMaterial = {
     uniforms: {
         uTime: { value: 0 },
-        uColor1: { value: new THREE.Color("#FFDEE9") }, // Pastel Pink
-        uColor2: { value: new THREE.Color("#FFFEF2") }, // Cream
-        uColor3: { value: new THREE.Color("#FFFFFF") }, // White
+        // Fluid palette for demo header
+        uColor1: { value: new THREE.Color("#DEBBB4") }, // warm blush
+        uColor2: { value: new THREE.Color("#DED0B4") }, // soft sand
+        uColor3: { value: new THREE.Color("#F6EEE7") }, // subtle highlight
     },
     vertexShader: `
         varying vec2 vUv;
@@ -37,15 +38,20 @@ const FluidShaderMaterial = {
         }
 
         void main() {
-            // Speed increased from 0.3 to 0.5
-            float t = uTime * 0.5;
+            // Flow speed
+            float t = uTime * 0.35;
             vec2 uv = vUv;
             
-            // Create organic movement using sine waves
-            float wave1 = sin(uv.x * 3.0 + t) * cos(uv.y * 2.0 - t * 0.5);
-            float wave2 = sin(uv.x * 5.0 - t * 0.8) * cos(uv.y * 5.0 + t);
-            // Fix: use global length() function, not uv.length() method
-            float wave3 = sin(length(uv - 0.5) * 8.0 - t);
+            // Gentle drift to keep colors moving
+            uv += vec2(sin(t * 0.15), cos(t * 0.12)) * 0.05;
+            
+            // Organic movement using layered waves
+            float wave1 = sin(uv.x * 2.8 + t * 0.9) * cos(uv.y * 2.2 - t * 0.6);
+            float wave2 = sin(uv.x * 5.2 - t * 0.7) * cos(uv.y * 4.6 + t * 0.8);
+            float wave3 = sin(length(uv - 0.5) * 7.5 - t * 1.1);
+            
+            // Soft turbulence from noise
+            float turb = noise(uv * 3.0 + t * 0.2) * 0.6 + noise(uv * 6.0 - t * 0.15) * 0.4;
 
             // Mix factors
             float mix1 = smoothstep(-1.0, 1.0, wave1);
@@ -53,11 +59,11 @@ const FluidShaderMaterial = {
             float mix3 = smoothstep(-1.0, 1.0, wave3);
 
             // Blending colors
-            vec3 color = mix(uColor1, uColor2, mix1);
-            color = mix(color, uColor3, mix2 * 0.6);
+            vec3 base = mix(uColor1, uColor2, clamp(mix1 * 0.7 + turb * 0.3, 0.0, 1.0));
+            vec3 color = mix(base, uColor3, mix2 * 0.45 + mix3 * 0.25);
             
             // Add subtle shimmer/light
-            color += mix3 * 0.05;
+            color += (mix3 + turb) * 0.04;
 
             gl_FragColor = vec4(color, 1.0);
         }
