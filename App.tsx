@@ -909,6 +909,18 @@ const DemoView = () => {
 const App: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState<'portfolio' | 'gemini3' | 'demo'>('portfolio');
+  const [prevView, setPrevView] = useState<'portfolio' | 'gemini3' | 'demo'>('portfolio');
+
+  // Scroll to top when navigating to gemini3 view from portfolio
+  useEffect(() => {
+    if (currentView === 'gemini3' && prevView === 'portfolio') {
+      // Wait for component to render, then scroll to top
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    }
+    setPrevView(currentView);
+  }, [currentView]);
 
   const handleNavClick = (view: 'portfolio' | 'gemini3' | 'demo', id?: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -941,7 +953,9 @@ const App: React.FC = () => {
   // Portfolio Home View (Liquid Glass)
   if (currentView === 'portfolio') {
     return (
-      <PortfolioHomeView onNavigate={(view) => setCurrentView(view as 'portfolio' | 'gemini3' | 'demo')} />
+      <PortfolioHomeView onNavigate={(view) => {
+        handleNavClick(view as 'portfolio' | 'gemini3' | 'demo')({ preventDefault: () => {} } as React.MouseEvent);
+      }} />
     );
   }
 
