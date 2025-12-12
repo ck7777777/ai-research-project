@@ -256,13 +256,13 @@ const PortfolioHomeView = ({ onNavigate }: { onNavigate: (view: string) => void 
                 
                 {/* Social links */}
                 <div className="flex justify-center md:justify-start gap-4">
-                  <a href="#" className="glass-button p-3 rounded-full">
+                  <a href="https://www.linkedin.com/in/cherylkuo7/" target="_blank" rel="noopener noreferrer" className="glass-button p-3 rounded-full">
                     <Linkedin size={20} />
                   </a>
                   <a href="#" className="glass-button p-3 rounded-full">
                     <Github size={20} />
                   </a>
-                  <a href="#" className="glass-button p-3 rounded-full">
+                  <a href="mailto:cherylkuo77@gmail.com" className="glass-button p-3 rounded-full">
                     <Mail size={20} />
                   </a>
                   <a
