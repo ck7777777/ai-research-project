@@ -238,7 +238,7 @@ const PortfolioHomeView = ({ onNavigate }: { onNavigate: (view: string) => void 
               <div className="flex justify-center">
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden">
                   <img 
-                    src={`${import.meta.env.BASE_URL}Clogo1.png`}
+                    src={`${import.meta.env.BASE_URL}look.jpeg`}
                     alt="Cheryl Kuo"
                     className="w-full h-full object-cover"
                   />
